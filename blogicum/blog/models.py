@@ -7,22 +7,44 @@ User = get_user_model()
 
 
 class Category(PublishedModel, CreatedAt):
-    title = models.CharField(max_length=256)
-    description = models.TextField()
-    slug = models.SlugField(unique=True)
+    title = models.CharField(max_length=256, verbose_name='Заголовок')
+    description = models.TextField(verbose_name='Описание')
+    slug = models.SlugField(
+        unique=True,
+        verbose_name='Идендификатор',
+        help_text='Идентификатор страницы для URL; разрешены символы латиницы, цифры, дефис и подчёркивание.',
+    )
+
+    class Meta:
+        verbose_name = 'категория'
+        verbose_name_plural = 'Категории'
+    
+    def __str__(self):
+        return self.title
 
 
 class Location(PublishedModel, CreatedAt):
-    name = models.CharField(max_length=256)
+    name = models.CharField(max_length=256, verbose_name='Название места')
+
+    class Meta:
+        verbose_name = 'местоположение'
+        verbose_name_plural = 'Местоположения'
+    
+    def __str__(self):
+        return self.name
 
 
 class Post(PublishedModel, CreatedAt):
     title = models.CharField(max_length=256)
-    text = models.TextField()
-    pub_date = models.DateTimeField()
+    text = models.TextField(verbose_name='Текст')
+    pub_date = models.DateTimeField(
+        verbose_name='Дата и время публикации',
+        help_text='Если установить дату и время в будущем — можно делать отложенные публикации.',
+    )
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
+        verbose_name='Автор публикации',
     )
     category = models.ForeignKey(
         Category,
@@ -30,6 +52,7 @@ class Post(PublishedModel, CreatedAt):
         null=True,
         blank=True,
         related_name ='blog',
+        verbose_name='Категория',
     )
     location = models.ForeignKey(
         Location,
@@ -37,4 +60,12 @@ class Post(PublishedModel, CreatedAt):
         null=True,
         blank=True,
         related_name ='blog',
+        verbose_name='Местоположение',
     )
+
+    class Meta:
+        verbose_name = 'публикация'
+        verbose_name_plural = 'Публикации'
+    
+    def __str__(self):
+        return self.title
