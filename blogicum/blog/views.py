@@ -1,11 +1,14 @@
 from django.shortcuts import render
 
+from blog.models import Post
+
 from django.http import Http404
 
 
 def index(request):
     templates_name = 'blog/index.html'
-    context = {'posts': posts}
+    post_list = Post.objects.all()
+    context = {'post_list': post_list}
     return render(request, templates_name, context)
 
 
