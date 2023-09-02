@@ -11,7 +11,7 @@ class Category(PublishedModel, CreatedAt):
     description = models.TextField(verbose_name='Описание')
     slug = models.SlugField(
         unique=True,
-        verbose_name='Идендификатор',
+        verbose_name='Идентификатор',
         help_text='Идентификатор страницы для URL; разрешены символы латиницы, цифры, дефис и подчёркивание.',
     )
 
@@ -50,7 +50,6 @@ class Post(PublishedModel, CreatedAt):
         Category,
         on_delete=models.SET_NULL, 
         null=True,
-        blank=True,
         related_name ='blog',
         verbose_name='Категория',
     )
