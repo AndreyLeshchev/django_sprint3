@@ -1,12 +1,12 @@
 from django.shortcuts import get_object_or_404, render
-from datetime import datetime as dt
+import datetime as dt
 from blog.models import Post, Category
 
 
 def index(request):
     templates_name = 'blog/index.html'
     post_list = Post.objects.filter(
-        pub_date__lt=dt.now(),
+        pub_date__date__lt=dt.date.today(),
         is_published=True,
         category__is_published=True).order_by('-pub_date')[:5]
     context = {'post_list': post_list}
@@ -17,7 +17,7 @@ def post_detail(request, post_id):
     templates_name = 'blog/detail.html'
     post = get_object_or_404(
         Post.objects.filter(
-            pub_date__lt=dt.now(),
+            pub_date__date__lt=dt.date.today(),
             is_published=True,
             category__is_published=True,
         ),
@@ -36,7 +36,7 @@ def category_posts(request, category_slug):
         )
     )
     post_list = Post.objects.filter(
-        pub_date__lt=dt.now(),
+        pub_date__date__lt=dt.date.today(),
         is_published=True,
         category__slug=category_slug,
     )
