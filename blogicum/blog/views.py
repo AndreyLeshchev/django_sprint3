@@ -21,7 +21,7 @@ def post_detail(request, post_id):
             is_published=True,
             category__is_published=True,
         ),
-        pk=post_id
+        pk=post_id,
     )
     context = {'post': post}
     return render(request, templates_name, context)
@@ -32,8 +32,8 @@ def category_posts(request, category_slug):
     category = get_object_or_404(
         Category.objects.filter(
             slug=category_slug,
-            is_published=True,
-        )
+        ),
+        is_published=True,
     )
     post_list = Post.objects.filter(
         pub_date__date__lt=dt.date.today(),
