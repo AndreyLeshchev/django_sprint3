@@ -8,8 +8,11 @@ def index(request):
     post_list = Post.objects.filter(
         pub_date__date__lt=dt.date.today(),
         is_published=True,
-        category__is_published=True).order_by('-pub_date')[:5]
-    context = {'post_list': post_list}
+        category__is_published=True
+    ).order_by('-pub_date')[:5]
+    context = {
+        'post_list': post_list,
+    }
     return render(request, templates_name, context)
 
 
@@ -23,7 +26,9 @@ def post_detail(request, post_id):
         ),
         pk=post_id,
     )
-    context = {'post': post}
+    context = {
+        'post': post,
+    }
     return render(request, templates_name, context)
 
 
