@@ -13,23 +13,30 @@ class PostAdmin(admin.ModelAdmin):
         'category',
         'location',
     )
+
     list_editable = (
         'is_published',
         'category',
         'location',
     )
+
     search_fields = (
         'title',
     )
+
     list_filter = (
         'category',
     )
+
     list_display_links = (
         'title',
     )
 
 
 admin.site.register(Category)
+
 admin.site.register(Location)
+
 admin.site.register(Post, PostAdmin)
+
 admin.site.empty_value_display = 'Не задано'

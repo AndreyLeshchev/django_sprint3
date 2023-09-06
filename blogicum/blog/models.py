@@ -1,7 +1,8 @@
 from django.db import models
-from core.models import PublishedModel
-from core.models import CreatedAt
 from django.contrib.auth import get_user_model
+
+from core.models import PublishedModel, CreatedAt
+
 
 User = get_user_model()
 
