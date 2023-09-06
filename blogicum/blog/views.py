@@ -1,4 +1,4 @@
-import datetime as dt
+from datetime import datetime as dt
 
 from django.shortcuts import get_object_or_404, render
 
@@ -9,7 +9,7 @@ def index(request):
     NUMBER_PUBLICATIONS = 5
     templates_name = 'blog/index.html'
     posts = Post.objects.filter(
-        pub_date__lt=dt.datetime.now(),
+        pub_date__date__lt=dt.now(),
         is_published=True,
         category__is_published=True,
     ).order_by('-pub_date')[:NUMBER_PUBLICATIONS]
@@ -23,7 +23,7 @@ def post_detail(request, post_id):
     templates_name = 'blog/detail.html'
     post = get_object_or_404(
         Post.objects.filter(
-            pub_date__lt=dt.datetime.now(),
+            pub_date__date__lt=dt.now(),
             is_published=True,
             category__is_published=True,
         ),
@@ -43,13 +43,13 @@ def category_posts(request, category_slug):
         ),
         is_published=True,
     )
-    post_list = Post.objects.filter(
-        pub_date__lt=dt.datetime.now(),
+    posts_category = Post.objects.filter(
+        pub_date__date__lt=dt.now(),
         is_published=True,
         category__slug=category_slug,
     )
     context = {
         'category': category,
-        'post_list': post_list,
+        'post_list': posts_category,
     }
     return render(request, templates_name, context)
